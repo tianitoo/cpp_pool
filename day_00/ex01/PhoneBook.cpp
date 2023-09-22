@@ -23,7 +23,7 @@ void	PhoneBook::add()
     std::cin >> last_name;
     std::cout << "Enter nickname: ";
     std::cin >> nickname;
-    
+    std::cout << std::endl;
     contact.setFirstName(first_name);
     contact.setLastName(last_name);
     contact.setNickname(nickname);
