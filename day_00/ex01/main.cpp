@@ -12,9 +12,12 @@ int		main(void)
         if (input == "EXIT" || std::cin.eof())
             break ;
         else if (input == "ADD")
-            phonebook.add();
+            phonebook.Add();
         else if (input == "SEARCH")
-            phonebook.search();
+            phonebook.Search();
+        else
+            std::cout << "Invalid command" << std::endl;
+        std::cin.clear();
     }
     return (0);
 }

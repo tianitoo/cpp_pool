@@ -9,21 +9,25 @@
 class PhoneBook
 {
     private:
-        Contact		contacts[8];
-        int			contactindex;
+        Contact		Contacts[8];
+        int			ContactIndex;
+        int         ContactNumber;
 
     public:
         PhoneBook();
         ~PhoneBook();
 
-        void		add(void);
-        void		search(void);
-        void		print_contacts();
-        int&		getIndex(void);
-        Contact&	getContacts(void);
-        Contact&	getContact(int index);
-        void        setIndex(int index);
-        void        setContacts(Contact contact, int index);
+        void		Add(void);
+        void		Search(void);
+        void		PrintContacts();
+        int&		GetIndex(void);
+        int&        GetContactNumber(void);
+        Contact&	GetContacts(void);
+        Contact&	GetContact(int Index);
+        void        SetIndex(int Index);
+        void        SetContacts(Contact Contact, int Cndex);
+        void        SetContactNumber(int ContactNumber);
+        void        ShowContact(); 
 };
 
 

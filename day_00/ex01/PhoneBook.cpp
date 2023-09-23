@@ -3,76 +3,122 @@
 
 PhoneBook::PhoneBook()
 {
-    this->contactindex = 0;
+    this->ContactIndex = 0;
+    this->ContactNumber = 0;
 }
 
 PhoneBook::~PhoneBook()
 {
 }
 
-void	PhoneBook::add()
+void	PhoneBook::Add()
 {
-    Contact             contact;
-    std::string         first_name;
-    std::string         last_name;
-    std::string         nickname;
+    Contact             Contact;
+    std::string         FirstName;
+    std::string         LastName;
+    std::string         Nickname;
+    std::string         DarkestSecret;
     
     std::cout << "Enter first name: ";
-    std::cin >> first_name;
+    std::cin >> FirstName;
     std::cout << "Enter last name: ";
-    std::cin >> last_name;
+    std::cin >> LastName;
     std::cout << "Enter nickname: ";
-    std::cin >> nickname;
-    std::cout << std::endl;
-    contact.setFirstName(first_name);
-    contact.setLastName(last_name);
-    contact.setNickname(nickname);
+    std::cin >> Nickname;
+    std::cout << "Enter darkest secret: ";
+    std::cin >> DarkestSecret;
+    Contact.SetFirstName(FirstName);
+    Contact.SetLastName(LastName);
+    Contact.SetNickname(Nickname);
+    Contact.SetDarkestSecret(DarkestSecret);
 
-    if (this->getIndex() == 8)
-        this->setIndex(0);
-    this->setContacts(contact, this->getIndex());
-    this->setIndex(this->getIndex() + 1);
+    if (this->GetIndex() == 8)
+        this->SetIndex(0);
+    this->SetContacts(Contact, this->GetIndex());
+    this->SetIndex(this->GetIndex() + 1);
+    if (this->GetContactNumber() < 8)
+        this->SetContactNumber(this->GetContactNumber() + 1);
 }
 
-void	PhoneBook::search(void)
+void	PhoneBook::Search(void)
 {
-    int			index;
-    std::string	input;
+    int			Index;
+
     std::cout << std::setw(10) << "index" << "|";
     std::cout << std::setw(10) << "first name" << "|";
     std::cout << std::setw(10) << "last name" << "|";
     std::cout << std::setw(10) << "nickname" << std::endl;
-    index = 0;
-    print_contacts();
+    Index = 0;
+    PrintContacts();
+    ShowContact();
 }
 
-void PhoneBook::print_contacts() {
-    for (int index = 0; index < 8; index++) {
-        this->getContact(index).print_contact(index);
+void    PhoneBook::ShowContact()
+{
+    int			Index;
+    std::string FirstName;
+    std::string LastName;
+    std::string Nickname;
+    std::string DarkestSecret;
+    
+    while (1)
+    {
+        std::cout << "Enter index: ";
+        if (std::cin >> Index){
+            if (Index >= 0 && Index <= 7 && Index < this->GetContactNumber()) {
+                std::cout << std::left << std::setw(17) << "First name" << ": " << this->GetContact(Index).GetFirstName() << std::endl;
+                std::cout << std::left << std::setw(17) << "Last name" << ": " << this->GetContact(Index).GetLastName() << std::endl;
+                std::cout << std::left << std::setw(17) << "Nickname" << ": " << this->GetContact(Index).GetNickname() << std::endl;
+                std::cout << std::left << std::setw(17) << "Darkest secret" << ": " << this->GetContact(Index).GetDarkestSecret() << std::endl;
+                break ;
+            }
+            else
+                std::cout << "Invalid index" << std::endl;
+        }
+        else
+            std::cout << "Invalid index" << std::endl;
+        std::cin.clear();
+        std::cin.ignore(10000, '\n');
     }
 }
 
-int&	PhoneBook::getIndex(void)
-{
-    return (this->contactindex);
+void PhoneBook::PrintContacts() {
+    for (int index = 0; index < 8; index++) {
+        this->GetContact(index).PrintContact(index);
+    }
 }
 
-Contact&	PhoneBook::getContacts(void)
+int&	PhoneBook::GetIndex(void)
 {
-    return (*this->contacts);
+    return (this->ContactIndex);
 }
 
-void         PhoneBook::setIndex(int index)
+Contact&	PhoneBook::GetContacts(void)
 {
-    this->contactindex = index;
+    return (*this->Contacts);
 }
 
-void     PhoneBook::setContacts(Contact contact, int index)
+int&    PhoneBook::GetContactNumber(void)
 {
-    this->contacts[index] = contact;
+    return (this->ContactNumber);
 }
 
-Contact&	PhoneBook::getContact(int index)
+void         PhoneBook::SetIndex(int Index)
 {
-    return (this->contacts[index]);
+    this->ContactIndex = Index;
+}
+
+void     PhoneBook::SetContacts(Contact Contact, int Index)
+{
+    this->Contacts[Index] = Contact;
+}
+
+Contact&	PhoneBook::GetContact(int Index)
+{
+    return (this->Contacts[Index]);
+}
+
+void    PhoneBook::SetContactNumber(int ContactNumber)
+{
+    this->ContactNumber = ContactNumber;
 }

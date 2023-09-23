@@ -6,34 +6,55 @@ Contact::Contact() {
 Contact::~Contact() {
 }
 
-std::string Contact::getFirstName() const {
-    return first_name;
+std::string Contact::GetFirstName() {
+    return FirstName;
 }
 
-std::string Contact::getLastName() const {
-    return last_name;
+std::string Contact::GetLastName() {
+    return LastName;
 }
 
-std::string Contact::getNickname() const {
-    return nickname;
+std::string Contact::GetNickname() {
+    return Nickname;
 }
 
-void Contact::setFirstName(const std::string first_name) {
-    this->first_name = first_name;
+std::string Contact::GetDarkestSecret() {
+    return DarkestSecret;
 }
 
-void Contact::setLastName(const std::string last_name) {
-    this->last_name = last_name;
+void Contact::SetFirstName(std::string FirstName) {
+    this->FirstName = FirstName;
 }
 
-void Contact::setNickname(const std::string nickname) {
-    this->nickname = nickname;
+void Contact::SetLastName(std::string LastName) {
+    this->LastName = LastName;
 }
 
-void    Contact::print_contact(int index)
+void Contact::SetNickname(std::string Nickname) {
+    this->Nickname = Nickname;
+}
+
+void Contact::SetDarkestSecret(std::string DarkestSecret) {
+    this->DarkestSecret = DarkestSecret;
+}
+
+void    Contact::PrintContact(int Index)
 {
-    std::cout << std::setw(10) << index << "|";
-    std::cout << std::setw(10) << this->getFirstName() << "|";
-    std::cout << std::setw(10) << this->getLastName() << "|";
-    std::cout << std::setw(10) << this->getNickname() << std::endl;
+    std::string FirstName;
+    std::string LastName;
+    std::string Nickname;
+
+    FirstName = this->GetFirstName();
+    LastName = this->GetLastName();
+    Nickname = this->GetNickname();
+    if (FirstName.length() > 10)
+        FirstName = FirstName.substr(0, 9) + ".";
+    if (LastName.length() > 10)
+        LastName = LastName.substr(0, 9) + ".";
+    if (Nickname.length() > 10)
+        Nickname = Nickname.substr(0, 9) + ".";
+    std::cout << std::setw(10) << Index << "|";
+    std::cout << std::setw(10) << FirstName << "|";
+    std::cout << std::setw(10) << LastName << "|";
+    std::cout << std::setw(10) << Nickname << std::endl;
 }
