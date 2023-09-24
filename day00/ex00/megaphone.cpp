@@ -6,7 +6,7 @@ int main(int argc, char **argv)
 {
     int i;
     int j;
-    char c;
+    std::string str;
 
     if (argc == 1)
         std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *";
@@ -15,12 +15,11 @@ int main(int argc, char **argv)
         i = 1;
         while (i < argc)
         {
-        
+            str = argv[i];
             j = 0;
             while (argv[i][j])
             {
-                c = toupper(argv[i][j]);
-                std::cout << c;
+                std::cout << (char)toupper(str[j]);
                 j++;
             }
             i++;
