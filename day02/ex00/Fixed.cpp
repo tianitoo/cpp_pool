@@ -6,7 +6,7 @@ Fixed::Fixed( void ) : fixedPointValue( 0 ) {
 
 Fixed::Fixed( Fixed const & src ) {
     std::cout << "Copy constructor called" << std::endl;
-    *this = src;
+    this->fixedPointValue = src.getRawBits();
 }
 
 Fixed::~Fixed( void ) {

@@ -20,9 +20,11 @@
             int toInt( void ) const;
             float toFloat( void ) const;
 
+
         private:
             int fixedPointValue;
             static const int fractionalBits = 8;
     };
+    std::ostream & operator<<( std::ostream & o , Fixed const & rhs );
 
 #endif
