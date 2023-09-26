@@ -1,5 +1,5 @@
 NAME = SedIsForLosers
-CPP = C++
+CPP = c++
 FLAGS = -Wall -Wextra -Werror
 C98 = -std=c++98
 

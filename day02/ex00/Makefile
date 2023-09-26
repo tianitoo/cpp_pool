@@ -1,11 +1,11 @@
-NAME = hiThisIsBrain
+NAME = Fixed
 CPP = c++
 FLAGS = -Wall -Wextra -Werror
 C98 = -std=c++98
 
-BRAIN = main.cpp
+FIXED = main.cpp Fixed.cpp
 
-OBJ = $(BRAIN:.cpp=.o)
+OBJ = $(FIXED:.cpp=.o)
 
 all: $(NAME)
 
