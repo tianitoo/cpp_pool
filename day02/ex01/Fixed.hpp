@@ -11,7 +11,7 @@
             Fixed( float const f );
             ~Fixed( void );
 
-            Fixed & operator=( Fixed const & rhs );
+            Fixed & operator =( Fixed const & rhs );
             Fixed & operator <<( int const n );
 
             int getRawBits( void ) const;

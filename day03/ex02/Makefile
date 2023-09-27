@@ -1,0 +1,26 @@
+NAME = FragTrap
+CPP = c++
+FLAGS = -Wall -Wextra -Werror
+C98 = -std=c++98
+
+FRAGTRAP = main.cpp FragTrap.cpp ClapTrap.cpp
+
+OBJ = $(FRAGTRAP:.cpp=.o)
+
+all: $(NAME)
+
+$(NAME): $(OBJ)
+	$(CPP) $(FLAGS) $(C98) $(OBJ) -o $(NAME)
+
+%.o: %.cpp
+	$(CPP) $(FLAGS) $(C98) -c $< -o $@
+
+clean:
+	rm -f $(OBJ)
+
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
+
+.PHONY: clean fclean re
