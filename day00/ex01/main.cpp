@@ -4,19 +4,20 @@ int		main(void)
 {
     std::string	input;
     PhoneBook	phonebook;
+    int         i;
 
-    while (1)
+    i = 1;
+    while (i)
     {
         std::cout << "Enter command: ";
-        std::cin >> input;
-        if (input == "EXIT" || std::cin.eof())
+        if (!std::getline(std::cin, input) || input == "EXIT" || std::cin.eof())
             break ;
         else if (input == "ADD")
-            phonebook.Add();
+            i = phonebook.Add();
         else if (input == "SEARCH")
-            phonebook.Search();
+            i = phonebook.Search();
         else
-            std::cout << "Invalid command" << std::endl;
+            std::cout << input << "Invalid command" << std::endl;
         std::cin.clear();
     }
     return (0);

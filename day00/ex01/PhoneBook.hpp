@@ -17,17 +17,17 @@ class PhoneBook
         PhoneBook();
         ~PhoneBook();
 
-        void		Add(void);
-        void		Search(void);
+        int 		Add(void);
+        int		    Search(void);
+        int         ShowContact(); 
         void		PrintContacts();
-        int&		GetIndex(void);
         int&        GetContactNumber(void);
-        Contact&	GetContacts(void);
-        Contact&	GetContact(int Index);
-        void        SetIndex(int Index);
-        void        SetContacts(Contact Contact, int Cndex);
         void        SetContactNumber(int ContactNumber);
-        void        ShowContact(); 
+        Contact&	GetContact(int Index);
+        int&		GetIndex(void);
+        void        SetIndex(int Index);
+        Contact&	GetContacts(void);
+        void        SetContacts(Contact Contact, int Cndex);
 };
 
 

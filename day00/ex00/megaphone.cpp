@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cctype>
 #include <string>
 
 int main(int argc, char **argv)
@@ -17,9 +16,10 @@ int main(int argc, char **argv)
         {
             str = argv[i];
             j = 0;
-            while (argv[i][j])
+            while (str[j])
             {
-                std::cout << (char)toupper(str[j]);
+                char c = toupper(str[j]);
+                std::cout << c;
                 j++;
             }
             i++;

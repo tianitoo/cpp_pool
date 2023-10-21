@@ -12,8 +12,6 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	$(CPP) $(FLAGS) $(C98) $(OBJ) -o $(NAME)
 
-
-
 %.o: %.cpp
 	$(CPP) $(FLAGS) $(C98) -c $< -o $@
 
