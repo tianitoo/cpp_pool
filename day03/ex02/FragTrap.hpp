@@ -10,8 +10,13 @@
     private:
         /* data */
     public:
+        FragTrap();
         FragTrap(std::string name);
+        FragTrap( FragTrap& fragTrap);
         ~FragTrap();
+
+        FragTrap& operator=(FragTrap& fragTrap);
+
         void highFivesGuys(void);
     };
 

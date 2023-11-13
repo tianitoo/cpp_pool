@@ -3,18 +3,14 @@
 Fixed::Fixed( void ) : fixedPointValue( 0 ) {
 }
 
-Fixed::Fixed( Fixed const & src ) {
-    *this = src;
+Fixed::Fixed( Fixed const & src ) : fixedPointValue( src.getRawBits() ) {
 }
 
-Fixed::Fixed( int const n ) {
-    this->fixedPointValue = n << this->fractionalBits;
+Fixed::Fixed( int const n ) : fixedPointValue( n * 256 ) {
 }
 
-Fixed::Fixed( float const f ) {
-    this->fixedPointValue = roundf( f * ( 1 << this->fractionalBits ) );
+Fixed::Fixed( float const f ) : fixedPointValue( (int) ( f * 256 + 0.5 ) ) {
 }
-
 
 Fixed::~Fixed( void ) {
 }
@@ -33,11 +29,11 @@ void Fixed::setRawBits( int const raw ) {
 }
 
 int Fixed::toInt( void ) const {
-    return this->fixedPointValue >> this->fractionalBits;
+    return this->fixedPointValue  / 256;
 }
 
 float Fixed::toFloat( void ) const {
-    return (float)this->fixedPointValue / ( 1 << this->fractionalBits );
+    return (float)this->fixedPointValue / 256;
 }
 
 std::ostream & operator<<( std::ostream & o, Fixed const & rhs ) {

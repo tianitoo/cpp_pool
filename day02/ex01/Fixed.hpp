@@ -11,15 +11,14 @@
             Fixed( float const f );
             ~Fixed( void );
 
-            Fixed & operator =( Fixed const & rhs );
-            Fixed & operator <<( int const n );
+            Fixed & operator=( Fixed const & rhs );
+            Fixed & operator<<( int const n );
 
             int getRawBits( void ) const;
             void setRawBits( int const raw );
 
             int toInt( void ) const;
             float toFloat( void ) const;
-
 
         private:
             int fixedPointValue;
