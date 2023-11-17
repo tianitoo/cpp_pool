@@ -3,7 +3,7 @@
 Dog::Dog()
 {
     std::cout << "Dog constructor called" << std::endl;
-    this->setType("Dog");
+    this->type = "Dog";
 }
 
 Dog::Dog(Dog const & rhs)

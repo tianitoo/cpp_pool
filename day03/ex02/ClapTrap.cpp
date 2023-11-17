@@ -36,36 +36,48 @@ ClapTrap& ClapTrap::operator=(const ClapTrap& clapTrap)
 
 void ClapTrap::attack(const std::string& target)
 {
-    if (this->energyPoints > 0)
+    if (this->energyPoints > 0 && this->hitPoints > 0)
     {
         this->energyPoints--;
         std::cout << "ClapTrap " << this->name << " attacks " << target << ", causing " << this->attackDamage << " points of damage!" << std::endl;
     }
-    else
+    else if (this->hitPoints == 0)
         std::cout << "ClapTrap " << this->name << " has no energy points left!" << std::endl;
+    else
+        std::cout << "ClapTrap " << this->name << " is already dead!" << std::endl;
 }
 
 void ClapTrap::takeDamage(unsigned int amount)
 {
     if (this->hitPoints > 0)
     {
-        this->hitPoints -= amount;
+        if (amount > this->hitPoints)
+            this->hitPoints = 0;
+        else
+            this->hitPoints -= amount;
         std::cout << "ClapTrap " << this->name << " takes " << amount << " points of damage!" << std::endl;
     }
-    else
+    else if (this->hitPoints == 0)
         std::cout << "ClapTrap " << this->name << " is already dead!" << std::endl;
 }
 
 void ClapTrap::beRepaired(unsigned int amount)
 {
-    if (this->energyPoints > 0)
+    if (this->hitPoints > 0 && this->energyPoints > 0 && amount < UINT_MAX - this->hitPoints)
     {
         this->hitPoints += amount;
         this->energyPoints--;
         std::cout << "ClapTrap " << this->name << " is repaired for " << amount << " points of health!" << std::endl;
     }
-    else
+    else if (this->hitPoints == 0)
+        std::cout << "ClapTrap " << this->name << " is already dead!" << std::endl;
+    else if (this->energyPoints == 0)
         std::cout << "ClapTrap " << this->name << " has no energy points left!" << std::endl;
+    else
+    {
+        this->hitPoints = UINT_MAX;
+        std::cout << "ClapTrap " << this->name << " is already at full health!" << std::endl;
+    }
 }
 
 std::string ClapTrap::getName()
@@ -77,32 +89,32 @@ void ClapTrap::setName(std::string name)
     this->name = name;
 }
 
-int ClapTrap::getHitPoints()
+unsigned int ClapTrap::getHitPoints()
 {
     return this->hitPoints;
 }
 
-int ClapTrap::getEnergyPoints()
+unsigned int ClapTrap::getEnergyPoints()
 {
     return this->energyPoints;
 }
 
-int ClapTrap::getAttackDamage()
+unsigned int ClapTrap::getAttackDamage()
 {
     return this->attackDamage;
 }
 
-void ClapTrap::setHitPoints(int hitPoints)
+void ClapTrap::setHitPoints(unsigned int hitPoints)
 {
     this->hitPoints = hitPoints;
 }
 
-void ClapTrap::setEnergyPoints(int energyPoints)
+void ClapTrap::setEnergyPoints(unsigned int energyPoints)
 {
     this->energyPoints = energyPoints;
 }
 
-void ClapTrap::setAttackDamage(int attackDamage)
+void ClapTrap::setAttackDamage(unsigned int attackDamage)
 {
     this->attackDamage = attackDamage;
 }

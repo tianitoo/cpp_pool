@@ -77,17 +77,17 @@ void ClapTrap::setName(std::string name)
     this->name = name;
 }
 
-int ClapTrap::getHitPoints()
+unsigned int ClapTrap::getHitPoints()
 {
     return this->hitPoints;
 }
 
-int ClapTrap::getEnergyPoints()
+unsigned int ClapTrap::getEnergyPoints()
 {
     return this->energyPoints;
 }
 
-int ClapTrap::getAttackDamage()
+unsigned int ClapTrap::getAttackDamage()
 {
     return this->attackDamage;
 }

@@ -40,7 +40,7 @@ ScavTrap& ScavTrap::operator=(ScavTrap& scavTrap)
     return *this;
 }
 
-void ScavTrap::attack(std::string const & target)
+void ScavTrap::attack(const std::string& target)
 {
     if (this->getEnergyPoints() > 0)
     {

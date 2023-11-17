@@ -2,17 +2,26 @@
 # define DOG_HPP
 
 # include "Animal.hpp"
+# ifndef BRAIN_HPP
+#  define BRAIN_HPP
+#  include "Brain.hpp"
+# endif
 
     class Dog : public Animal
     {
     private:
-        /* data */
+        Brain *brain;
     public:
         Dog();
-        Dog(Dog const & src);
+        Dog(Dog & src);
         ~Dog();
-        Dog & operator=(Dog const & rhs);
+
+        Dog & operator=(Dog & rhs);
+
         void makeSound() const;
+
+        Brain & getBrain() const;
+        void setBrain(Brain & src);
     };
 
 #endif

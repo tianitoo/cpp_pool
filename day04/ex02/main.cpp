@@ -4,6 +4,7 @@
 
 int main()
 {
+    // Animal *animal = new Animal;
     Animal *dog = new Dog;
     Animal *cat = new Cat;
 

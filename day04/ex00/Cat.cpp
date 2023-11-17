@@ -3,7 +3,7 @@
 Cat::Cat()
 {
     std::cout << "Cat constructor called" << std::endl;
-    this->setType("Cat");
+    this->type = "Cat";
 }
 
 Cat::Cat(Cat const & rhs)

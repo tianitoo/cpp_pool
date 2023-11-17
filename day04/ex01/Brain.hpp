@@ -5,11 +5,11 @@ class Brain
 {
     public:
         Brain();
-        Brain(Brain const & src);
+        Brain(Brain & src);
         ~Brain();
-        Brain & operator=(Brain const & rhs);
-        std::string getIdea(int index) const;
-        void setIdea(int index, std::string idea);
+        
+        Brain & operator=(Brain & rhs);
+
     private:
         std::string ideas[100];
 };
