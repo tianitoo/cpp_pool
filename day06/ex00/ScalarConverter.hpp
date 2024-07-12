@@ -12,7 +12,7 @@
 # define FLOAT 3
 # define DOUBLE 4
 # define INF 5
-# define NAN 6
+# define NN 6
 
 class ScalarConverter
 {

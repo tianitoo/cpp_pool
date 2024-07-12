@@ -1,28 +1,12 @@
 #include "ScalarConverter.hpp"
+#include <iostream>
+#include <string>
 
-ScalarConverter::ScalarConverter()
-{
-}
-
-ScalarConverter::ScalarConverter(const ScalarConverter &other)
-{
-	(void)other;
-}
-
-ScalarConverter::~ScalarConverter()
-{
-}
-
-ScalarConverter &ScalarConverter::operator=(const ScalarConverter &other)
-{
-	(void)other;
-	return (*this);
-}
 
 int ScalarConverter::getType(std::string str)
 {
 	if (str == "nan" || str == "nanf")
-		return (NAN);
+		return (NN);
 	if (str == "inf" || str == "+inf" || str == "inff" || str == "+inff")
 		return (INF);
 	if (str.length() == 1 && isalpha(str[0]))
@@ -39,7 +23,7 @@ int ScalarConverter::getType(std::string str)
 		str.find_first_of("f") == str.find_last_of("f") &&
 		str.find_first_of("f") == str.length() - 1)
 		return (FLOAT);
-	return (NAN);
+	return (NN);
 }
 
 void ScalarConverter::printChar(char c)
@@ -119,19 +103,8 @@ void ScalarConverter::convert(std::string str)
 		printFloat(std::stof(str));
 	else if (type == DOUBLE)
 		printDouble(std::stod(str));
-	else if (type == NAN)
+	else if (type == NN)
 		printNan();
 	else
 		printInf();
-}
-
-int main(int argc, char **argv)
-{
-	if (argc != 2)
-	{
-		std::cout << "Usage: ./convert [string]" << std::endl;
-		return (1);
-	}
-	ScalarConverter::convert(argv[1]);
-	return (0);
 }
