@@ -1,10 +1,10 @@
-NAME = array
+NAME = span
 CPP = c++
 FLAGS = -Wall -Wextra -Werror
 C98 = -std=c++98
-HEADER = Array.hpp
+HEADER = Span.hpp
 
-FORM = main.cpp
+FORM = main.cpp Span.cpp
 
 OBJ = $(FORM:.cpp=.o)
 

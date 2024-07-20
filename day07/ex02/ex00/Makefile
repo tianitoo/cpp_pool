@@ -1,8 +1,8 @@
-NAME = array
+NAME = whatever
 CPP = c++
 FLAGS = -Wall -Wextra -Werror
 C98 = -std=c++98
-HEADER = Array.hpp
+HEADER = whatever.hpp
 
 FORM = main.cpp
 

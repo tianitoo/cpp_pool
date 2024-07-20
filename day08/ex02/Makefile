@@ -1,8 +1,8 @@
-NAME = array
+NAME = mutantstack
 CPP = c++
 FLAGS = -Wall -Wextra -Werror
 C98 = -std=c++98
-HEADER = Array.hpp
+HEADER = MutantStack.hpp
 
 FORM = main.cpp
 

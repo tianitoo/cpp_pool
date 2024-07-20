@@ -1,8 +1,8 @@
-NAME = array
+NAME = iter
 CPP = c++
 FLAGS = -Wall -Wextra -Werror
 C98 = -std=c++98
-HEADER = Array.hpp
+HEADER = iter.hpp
 
 FORM = main.cpp
 
