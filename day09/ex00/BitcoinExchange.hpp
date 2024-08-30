@@ -9,6 +9,7 @@
 #include <sstream>
 #include <iomanip>
 #include <cmath>
+#include <ctime>
 #include <fstream>
 #include <iostream>
 
@@ -22,6 +23,10 @@ public:
 
     std::map<std::string, double> getPrices() const;
 
+    int checkDate(std::string date) const;
+    void exchange(std::string fileName);
+
+    void getData();
 private:
-    std::map<std::string, double> _prices;
+    static std::map<std::string, double> _prices;
 };
