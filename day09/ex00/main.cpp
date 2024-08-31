@@ -34,7 +34,7 @@ int checkDate(std::string date, BitcoinExchange exchange)
     return 1;
 }
 
-int checkValue(double value)
+int checkValue(float value)
 {
     if (value < 0)
     {
@@ -49,44 +49,20 @@ int main(int argc, char **argv)
 {
     // read from file
     (void)argc;
-    BitcoinExchange exchange;
-    std::ifstream btc;
-
-    btc.open(argv[1]);
-    if (!btc.is_open())
+    if (argc != 2)
     {
-        std::cerr << "Error: cannot open data.csv" << std::endl;
+        std::cerr << "usage: ./bitcoin [filename]" << std::endl;
         return 1;
     }
 
+    BitcoinExchange::readData();
+
+    BitcoinExchange::exchange(argv[1]);
+
+
+
+
     // std::cout << "|" << exchange.getPrices().at("2009-01-02") << "|" << std::endl;
 
-    std::string line;
-    while (std::getline(btc, line))
-    {
-        std::string date;
-        double value;
-        // double price;
-
-        // get date and value separated by |
-        std::istringstream ss(line);
-        // check if line is valid format YYYY-MM-DD | value
-
-        std::getline(ss, date, '|');
-        date = date.substr(0, date.length() - 1);
-        if (checkDate(date, exchange) == 0)
-        {
-            std::cerr << "Error: invalid date format" << std::endl;
-            continue;
-        }
-        ss >> value;
-        if (checkValue(value) == 0)
-        {
-            continue;
-        }
-
-        std::cout << "|" << date << "|" << value << "|" << std::endl;
-        std::cout << date << " => " << value << " = " << value * exchange.getPrices().at(date) << std::endl;
-    }
-    
+   
 }

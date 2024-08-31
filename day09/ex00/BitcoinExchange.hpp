@@ -21,12 +21,15 @@ public:
     BitcoinExchange(const BitcoinExchange &other);
     BitcoinExchange &operator=(const BitcoinExchange &other);
 
-    std::map<std::string, double> getPrices() const;
+    std::map<std::string, float> getPrices() const;
 
-    int checkDate(std::string date) const;
-    void exchange(std::string fileName);
+    static void readData();
+    static int checkDate(std::string date);
+    static std::string findClosestDate(std::string date);
+    static void exchange(std::string fileName);
+
 
     void getData();
 private:
-    static std::map<std::string, double> _prices;
+    static std::map<std::string, float> _prices;
 };

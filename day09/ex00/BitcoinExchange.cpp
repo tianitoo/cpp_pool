@@ -1,39 +1,24 @@
 #include "BitcoinExchange.hpp"
 
+std::map<std::string, float> BitcoinExchange::_prices;
 
 BitcoinExchange::BitcoinExchange()
-{
-    std::ifstream data;
-    data.open("data.csv");
+{}
 
-    if (!data.is_open())
-    {
-        std::cerr << "Error: cannot open data.csv" << std::endl;
-        return;
-    }
-
-    std::string line;
-    while (std::getline(data, line))
-    {
-        std::istringstream ss(line);
-        std::string date;
-        double price;
-        std::getline(ss, date, ',');
-        ss >> price;
-        _prices[date] = price;
-    }
-    data.close();
-}
-
-int BitcoinExchange::checkDate(std::string date) const
+int BitcoinExchange::checkDate(std::string date)
 {
     std::istringstream ss(date);
     char delim;
     int year, month, day;
 
+    if (date.find_first_not_of("0123456789-") != std::string::npos || date.length() != 10)
+    {
+        return false;
+    }
+
     if (ss >> year >> delim >> month >> delim >> day)
     {
-        if (year < 2009 || year > 2021 || month < 1 || month > 12 || day < 1 || day > 31)
+        if (year < 2009 || year > 2022 || month < 1 || month > 12 || day < 1 || day > 31 || (year == 2009 && month == 1))
         {
             return false;
         }
@@ -55,12 +40,67 @@ int BitcoinExchange::checkDate(std::string date) const
                 return false;
             }
         }
-        return 0;
+        return true;
     }
     else
     {
-        return -1;
+        return false;
     }
+}
+
+void BitcoinExchange::readData() {
+    std::ifstream data;
+    data.open("data.csv");
+
+    if (!data.is_open())
+    {
+        std::cerr << "Error: cannot open data.csv" << std::endl;
+        return;
+    }
+
+    std::string line;
+    while (std::getline(data, line))
+    {
+        std::istringstream ss(line);
+        std::string date;
+        float price;
+        std::getline(ss, date, ',');
+        ss >> price;
+        _prices.insert(std::pair<std::string, float>(date, price));
+    }
+    data.close();
+}
+
+std::string BitcoinExchange::findClosestDate(std::string date) {
+    std::string closestDate = "";
+    int year = std::stoi(date.substr(0, 4));
+    int month = std::stoi(date.substr(5, 2));
+    int day = std::stoi(date.substr(8, 2));
+    while (closestDate == "")
+    {
+        if (BitcoinExchange::_prices.find(date) != BitcoinExchange::_prices.end())
+        {
+            closestDate = date;
+        }
+        else
+        {
+            day--;
+            if (day < 1)
+            {
+                day = 31;
+                month--;
+                if (month < 1)
+                {
+                    month = 12;
+                    year--;
+                }
+            }
+            std::string newMonth = (month < 10) ? "0" + std::to_string(month) : std::to_string(month);
+            std::string newDay = (day < 10) ? "0" + std::to_string(day) : std::to_string(day);
+            date = std::to_string(year) + "-" + newMonth + "-" + newDay;
+        }
+    }
+    return closestDate;
 }
 
 void BitcoinExchange::exchange(std::string fileName) {
@@ -75,20 +115,28 @@ void BitcoinExchange::exchange(std::string fileName) {
     {
         std::istringstream ss(line);
         std::string date;
-        double amount;
-        std::string currency; // todo
-        ss >> date >> amount >> currency;
-        if (checkDate(date) == -1)
+        float amount;
+        std::string pipe;
+        if (!(ss >> date >> pipe >> amount) || pipe != "|" || !checkDate(date))
         {
-            std::cerr << "Error: invalid date" << std::endl;
+            std::cerr << "Error: bad input => " << date << std::endl;
             continue;
         }
-        if (_prices.find(date) == _prices.end())
+        if (amount < 0)
         {
-            std::cerr << "Error: no data for this date" << std::endl;
+            std::cerr << "Error: not a positive number" << std::endl;
             continue;
         }
-        std::cout << date << " " << amount << " BTC = " << amount * _prices.at(date) << " " << currency << std::endl;
+        if (amount > 1000) {
+            std::cerr << "Error: too large a number." << std::endl;
+            continue;
+        }
+        if (BitcoinExchange::_prices.find(date) != BitcoinExchange::_prices.end())
+        {
+            std::cout << date << " => " << amount << " = " << amount * BitcoinExchange::_prices.at(date) << std::endl;
+        } else {
+            std::cout << date << " => " << amount << " = " << amount * BitcoinExchange::_prices.at(findClosestDate(date)) << std::endl;
+        }
     }
 }
 
@@ -110,21 +158,7 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other)
     return *this;
 }
 
-std::map<std::string, double> BitcoinExchange::getPrices() const
+std::map<std::string, float> BitcoinExchange::getPrices() const
 {
     return _prices;
 }
-
-// void BitcoinExchange::updateRate(std::string const &currency, double rate)
-// {
-//     _rates[currency] = rate;
-// }
-
-// double BitcoinExchange::convert(std::string const &from, std::string const &to, double amount) const
-// {
-//     if (_rates.find(from) == _rates.end() || _rates.find(to) == _rates.end())
-//     {
-//         return 0;
-//     }
-//     return amount * _rates.at(to) / _rates.at(from);
-// }
