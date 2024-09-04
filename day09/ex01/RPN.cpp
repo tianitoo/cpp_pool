@@ -71,7 +71,7 @@ void RPN::calculate() {
     _operators.pop();
 
     while (!_operators.empty()) {
-    // printStack();
+        // printStack();
         int number;
         if (_operators.top().find_first_not_of("0123456789") != std::string::npos) {
             throw BadSyntax();
