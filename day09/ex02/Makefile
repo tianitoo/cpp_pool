@@ -1,10 +1,10 @@
-NAME = RPN
+NAME = PmergeMe
 CPP = c++
 FLAGS = -Wall -Wextra -Werror
 C98 = -std=c++98
-HEADER = RPN.hpp
+HEADER = PmergeMe.hpp
 
-FORM = main.cpp RPN.cpp
+FORM =  PmergeMe.cpp  #main.cpp
 
 OBJ = $(FORM:.cpp=.o)
 
