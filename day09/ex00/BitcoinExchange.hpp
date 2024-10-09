@@ -23,7 +23,7 @@ public:
 
     std::map<std::string, float> getPrices() const;
 
-    static void readData();
+    static int readData();
     static int checkDate(std::string date);
     static std::string findClosestDate(std::string date);
     static void exchange(std::string fileName);

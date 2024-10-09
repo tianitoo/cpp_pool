@@ -48,14 +48,14 @@ int BitcoinExchange::checkDate(std::string date)
     }
 }
 
-void BitcoinExchange::readData() {
+int BitcoinExchange::readData() {
     std::ifstream data;
     data.open("data.csv");
 
     if (!data.is_open())
     {
         std::cerr << "Error: cannot open data.csv" << std::endl;
-        return;
+        return 1;
     }
 
     std::string line;
@@ -69,6 +69,7 @@ void BitcoinExchange::readData() {
         _prices.insert(std::pair<std::string, float>(date, price));
     }
     data.close();
+    return 0;
 }
 
 std::string BitcoinExchange::findClosestDate(std::string date) {
@@ -103,7 +104,7 @@ std::string BitcoinExchange::findClosestDate(std::string date) {
     return closestDate;
 }
 
-void BitcoinExchange::exchange(std::string fileName) {
+void BitcoinExchange:: exchange(std::string fileName) {
     std::ifstream infile(fileName);
     if (!infile.is_open())
     {
@@ -111,6 +112,12 @@ void BitcoinExchange::exchange(std::string fileName) {
         return;
     }
     std::string line;
+    std::getline(infile, line);
+    if (line != "date | value")
+    {
+        std::cerr << "Error: bad data.csv" << std::endl;
+        return;
+    }
     while (std::getline(infile, line))
     {
         std::istringstream ss(line);

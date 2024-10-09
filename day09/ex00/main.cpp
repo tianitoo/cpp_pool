@@ -55,8 +55,10 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    BitcoinExchange::readData();
-
+    if (BitcoinExchange::readData())
+    {
+        return 1;
+    }
     BitcoinExchange::exchange(argv[1]);
 
 

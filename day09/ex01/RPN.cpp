@@ -1,6 +1,6 @@
 #include "RPN.hpp"
 
-std::stack<std::string> RPN::_operators;
+std::stack<int> RPN::_operators;
 
 RPN::RPN()
 {
@@ -23,23 +23,37 @@ RPN &RPN::operator=(const RPN &copy)
 
 void RPN::fillStack(std::string str) {
 
-    std::istringstream ss({str.rbegin(), str.rend()});
+    std::istringstream ss(str);
 
     while (ss) {
         std::string token;
         ss >> token;
         if (token.empty())
             break;
-        if (token == "+" || token == "-" || token == "*" || token == "/" || token.find_first_not_of("0123456789") == std::string::npos) {
-            _operators.push(token);
+        if (token.find_first_not_of("0123456789+-*/") == std::string::npos) {
+            if (token.find_first_of("+-*/") != std::string::npos) {
+                if (_operators.size() < 2)
+                    throw BadSyntax();
+                int num2 = _operators.top();
+                _operators.pop();
+                int num1 = _operators.top();
+                _operators.pop();
+                int res = operation(num1, num2, token);
+                _operators.push(res);
+            } else {
+                _operators.push(std::stoi(token));
+            }
         } else {
             throw InvalidToken();
         }
     }
+    if (_operators.size() != 1)
+        throw BadSyntax();
+    std::cout << _operators.top() << std::endl;
 }
 
 void RPN::printStack() {
-    std::stack<std::string> tmp = _operators;
+    std::stack<int> tmp = _operators;
     std::cout << "Stack: " << std::endl;
     while (!tmp.empty()) {
         std::cout << tmp.top() << " ";
@@ -57,48 +71,9 @@ int RPN::operation(int n1, int n2, std::string op) {
         return n1 * n2;
     } else if (op == "/") {
         return n1 / n2;
+    } else {
+        throw InvalidToken();
     }
     return 0;
 }
 
-void RPN::calculate() {
-    int result = 0;
-    // bool lastIsOperator = false;
-    if (_operators.top().find_first_not_of("0123456789") != std::string::npos) {
-        throw BadSyntax();
-    }
-    result = std::stoi(_operators.top());
-    _operators.pop();
-
-    while (!_operators.empty()) {
-        // printStack();
-        int number;
-        if (_operators.top().find_first_not_of("0123456789") != std::string::npos) {
-            throw BadSyntax();
-        }
-        number = std::stoi(_operators.top());
-        _operators.pop();
-        if (_operators.empty()) {
-            throw BadSyntax();
-        }
-        if (_operators.top() == "+" || _operators.top() == "-" || _operators.top() == "*" || _operators.top() == "/") {
-            result = operation(result, number, _operators.top());
-            _operators.pop();
-        } else if (_operators.top().find_first_not_of("0123456789") == std::string::npos) {
-            int number2 = std::stoi(_operators.top());
-            _operators.pop();
-            if (_operators.empty()) {
-                throw BadSyntax();
-            }
-            if (_operators.top() == "+" || _operators.top() == "-" || _operators.top() == "*" || _operators.top() == "/") {
-                number = operation(number, number2, _operators.top());
-                _operators.pop();
-                result = operation(result, number, _operators.top());
-                _operators.pop();
-            } else {
-                throw BadSyntax();
-            }
-        }
-    }
-    std::cout << result << std::endl;
-}

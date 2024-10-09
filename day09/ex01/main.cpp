@@ -8,9 +8,11 @@ int main(int ac, char **av)
         return 1;
     }
     try{
+        if (av[1][0] == '\0')
+            throw RPN::BadSyntax();
         RPN::fillStack(av[1]);
         // RPN::printStack();
-        RPN::calculate();
+        // RPN::calculate();
         // std::cout << "res " << std::endl;
     } catch (std::exception &e) {
         std::cerr << e.what() << std::endl;

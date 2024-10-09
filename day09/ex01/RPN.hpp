@@ -40,5 +40,5 @@ public:
     };
 
 private:
-    static std::stack<std::string> _operators;
+    static std::stack<int> _operators;
 };
