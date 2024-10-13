@@ -1,6 +1,9 @@
 #include "BitcoinExchange.hpp"
 
 std::map<std::string, float> BitcoinExchange::_prices;
+int BitcoinExchange::_firstYear = -1;
+int BitcoinExchange::_firstMonth = -1;
+int BitcoinExchange::_firstDay = -1;
 
 BitcoinExchange::BitcoinExchange()
 {}
@@ -16,19 +19,29 @@ int BitcoinExchange::checkDate(std::string date)
         return false;
     }
 
+
     if (ss >> year >> delim >> month >> delim >> day)
     {
-        if (year < 2009 || year > 2022 || month < 1 || month > 12 || day < 1 || day > 31 || (year == 2009 && month == 1))
+        if (year < _firstYear) {
+            return false;
+        }
+        if (year == _firstYear && month < _firstMonth) {
+            return false;
+        }
+        if (year == _firstYear && month == _firstMonth && day < _firstDay) {
+            return false;
+        }
+        if (month < 1 || month > 12 || day < 1 || day > 31)
         {
             return false;
         }
         if (month == 2)
         {
-            if (day == 29 && year % 4 != 0)
+            if (day > 29)
             {
                 return false;
             }
-            else if (day > 28)
+            if (day == 29 && year % 4 != 0)
             {
                 return false;
             }
@@ -66,6 +79,12 @@ int BitcoinExchange::readData() {
         float price;
         std::getline(ss, date, ',');
         ss >> price;
+        if (_firstYear == -1 && date.find_first_not_of("0123456789-") == std::string::npos)
+        {
+            _firstYear = std::stoi(date.substr(0, 4));
+            _firstMonth = std::stoi(date.substr(5, 2));
+            _firstDay = std::stoi(date.substr(8, 2));
+        }
         _prices.insert(std::pair<std::string, float>(date, price));
     }
     data.close();
@@ -123,12 +142,24 @@ void BitcoinExchange:: exchange(std::string fileName) {
         std::istringstream ss(line);
         std::string date;
         float amount;
+        std::string strAmount;
         std::string pipe;
-        if (!(ss >> date >> pipe >> amount) || pipe != "|" || !checkDate(date))
-        {
+        std ::string rest;
+        if (
+            !(ss >> date >> pipe >> strAmount) ||
+            ss >> rest ||
+            strAmount.find_first_not_of("0123456789.") != std::string::npos ||
+            strAmount[0] == '.' ||
+            strAmount[strAmount.length() - 1] == '.' ||
+            strAmount.find('.') != strAmount.rfind('.') ||
+            pipe != "|" || !checkDate(date)
+            ) {
             std::cerr << "Error: bad input => " << date << std::endl;
             continue;
         }
+        ss.clear();
+        ss.str(strAmount);
+        ss >> amount;
         if (amount < 0)
         {
             std::cerr << "Error: not a positive number" << std::endl;

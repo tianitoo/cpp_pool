@@ -4,7 +4,7 @@ FLAGS = -Wall -Wextra -Werror
 C98 = -std=c++98
 HEADER = PmergeMe.hpp
 
-FORM =  PmergeMe.cpp  #main.cpp
+FORM =  PmergeMe.cpp  
 
 OBJ = $(FORM:.cpp=.o)
 

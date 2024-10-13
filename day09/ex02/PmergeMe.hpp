@@ -38,29 +38,36 @@ class PmergeMe
             }
         };
 
+        static std::vector<size_t> genJacob(size_t n);
         // vector functions
+        static void sortVector(std::vector<std::vector<int> > &v, int start, int end);
+        static void merge(std::vector<std::vector<int> > &v, int start, int mid, int end);
+        static void insertionSort(std::vector<std::vector<int> > &v, int start, int end);
         static void mergeVector(std::vector<int> &v);
         static void doubleVector(std::vector<int> &v);
         static void sortDoubleVector();
-        static void insertSort();
+        static void jakobSortVector();
         static void printVector(std::vector<int> &v);
     
         // deque functions
+        static void sortDeque(std::deque<std::deque<int> > &d, int start, int end);
+        static void merge(std::deque<std::deque<int> > &d, int start, int mid, int end);
+        static void insertionSort(std::deque<std::deque<int> > &d, int start, int end);
         static void mergeDeque(std::deque<int> &d);
         static void doubleDeque(std::deque<int> &d);
         static void sortDoubleDeque();
-        static void insertSortDeque();
+        static void jakobSortDeque();
         static void printDeque(std::deque<int> &d);
 
         static void mergeSort(char **av);
 
     private:
         // vector parameters
-        static std::vector<std::vector<int>> _vv;
+        static std::vector<std::vector<int> > _vv;
         static std::vector<int> _sortedVector;
 
         // deque parameters
-        static std::deque<std::deque<int>> _dd;
+        static std::deque<std::deque<int> > _dd;
         static std::deque<int> _sortedDeque;
 
 
