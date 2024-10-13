@@ -4,7 +4,8 @@ std::vector<std::vector<int> > PmergeMe::_vv;
 std::vector<int> PmergeMe::_sortedVector;
 std::deque<std::deque<int> > PmergeMe::_dd;
 std::deque<int> PmergeMe::_sortedDeque;
-int leftover = -1;
+int stackleftover = -1;
+int dequeleftover = -1;
 int K = 5;
 
 PmergeMe::PmergeMe()
@@ -33,7 +34,7 @@ void PmergeMe::doubleVector(std::vector<int> &v)
 {
     if (v.size() % 2 != 0)
     {
-        leftover = v[v.size() - 1];
+        stackleftover = v[v.size() - 1];
         v.pop_back();
     }
     for (int i = 0; i < (int) v.size(); i += 2) {
@@ -154,9 +155,9 @@ void PmergeMe::jakobSortVector()
         last = jakobIndex;
         jakobIndex++;
     }
-    if (leftover != -1){
-        _sortedVector.insert(std::lower_bound(_sortedVector.begin(), _sortedVector.end(), leftover), leftover);
-        leftover = -1;
+    if (stackleftover != -1){
+        _sortedVector.insert(std::lower_bound(_sortedVector.begin(), _sortedVector.end(), stackleftover), stackleftover);
+        stackleftover = -1;
     }
 }
 
@@ -196,7 +197,7 @@ void PmergeMe::doubleDeque(std::deque<int> &d)
 {
     if (d.size() % 2 != 0)
     {
-        leftover = d[d.size() - 1];
+        dequeleftover = d[d.size() - 1];
         d.pop_back();
     }
     for (int i = 0; i < (int) d.size(); i += 2) {
@@ -294,7 +295,7 @@ void PmergeMe::jakobSortDeque()
         _sortedDeque.push_back(_dd[i][0]);
     }
     std::vector<size_t> jakob = genJacob(_dd.size());
-    while (jakob[last] < _dd.size())
+    while (jakob[last] < _dd.size() && jakobIndex < jakob.size())
     {
         for (size_t i = jakob[jakobIndex]; i > jakob[last] && jakobIndex < jakob.size(); i--)
         {
@@ -306,9 +307,9 @@ void PmergeMe::jakobSortDeque()
         last = jakobIndex;
         jakobIndex++;
     }
-    if (leftover != -1){
-        _sortedDeque.insert(std::lower_bound(_sortedDeque.begin(), _sortedDeque.end(), leftover), leftover);
-        leftover = -1;
+    if (dequeleftover != -1){
+        _sortedDeque.insert(std::lower_bound(_sortedDeque.begin(), _sortedDeque.end(), dequeleftover), dequeleftover);
+        dequeleftover = -1;
     }
 }
 
@@ -335,7 +336,7 @@ void PmergeMe::mergeDeque(std::deque<int> &d)
         jakobSortDeque();
     }
     std::clock_t end = std::clock();
-    std::cout << "Time to process a range of " << d.size() << " elements with std::deque : " << (end - start) << " us" << std::endl;
+    std::cout << "Time to process a range of " << _sortedDeque.size() << " elements with std::deque : " << (end - start) << " us" << std::endl;
 }
 
 void PmergeMe::mergeSort(char **av)
@@ -363,7 +364,7 @@ void PmergeMe::mergeSort(char **av)
     }
 
     mergeVector(v);
-    // mergeDeque(d);
+    mergeDeque(d);
 }
 
 
