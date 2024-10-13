@@ -41,7 +41,7 @@ void RPN::fillStack(std::string str) {
                 int res = operation(num1, num2, token);
                 _operators.push(res);
             } else {
-                _operators.push(std::stoi(token));
+                _operators.push(token[0] - '0');
             }
         } else {
             throw InvalidToken();
@@ -70,6 +70,8 @@ int RPN::operation(int n1, int n2, std::string op) {
     } else if (op == "*") {
         return n1 * n2;
     } else if (op == "/") {
+        if (n2 == 0)
+            throw BadSyntax();
         return n1 / n2;
     } else {
         throw InvalidToken();

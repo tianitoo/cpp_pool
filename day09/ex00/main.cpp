@@ -3,9 +3,10 @@
 
 int checkDate(std::string date, BitcoinExchange exchange)
 {
-    int year = std::stoi(date.substr(0, 4));
-    int month = std::stoi(date.substr(5, 2));
-    int day = std::stoi(date.substr(8, 2));
+    int year, month, day;
+    std::stringstream(date.substr(0, 4)) >> year;
+    std::stringstream(date.substr(5, 2)) >> month;
+    std::stringstream(date.substr(8, 2)) >> day;
     if (year < 2009 || year > 2022)
     {
         return 0;

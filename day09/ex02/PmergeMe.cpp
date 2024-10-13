@@ -187,7 +187,7 @@ void PmergeMe::mergeVector(std::vector<int> &v)
     std::clock_t end = std::clock();
     std::cout << "After: ";
     printVector(_sortedVector);
-    std::cout << "Time to process a range of " << v.size() << " elements with std::vector : " << (end - start) << " us" << std::endl;
+    std::cout << "Time to process a range of " << _sortedVector.size() << " elements with std::vector : " << (end - start) << " us" << std::endl;
 }
 
 // deque functions
@@ -363,7 +363,7 @@ void PmergeMe::mergeSort(char **av)
     }
 
     mergeVector(v);
-    mergeDeque(d);
+    // mergeDeque(d);
 }
 
 
